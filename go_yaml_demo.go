@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 
-	"encoding/json"
 	"gopkg.in/yaml.v2"
 )
 
@@ -31,6 +31,7 @@ type Config struct {
 
 func main() {
 	var cfg Config
+	var mCfg map[string]interface{}
 	cfgFile, err := ioutil.ReadFile("./config.yaml")
 	if err != nil {
 		fmt.Printf("read config file failed: %s\n", err.Error())
@@ -53,4 +54,15 @@ func main() {
 	}
 
 	fmt.Printf("%s\n", cfgJStr)
+
+	err = yaml.Unmarshal(cfgFile, &mCfg)
+
+	if err != nil {
+		fmt.Printf("parse config faile: %s\n", err.Error())
+		os.Exit(-1)
+	}
+
+	for k, v := range mCfg {
+		fmt.Printf("%s: %+v\n", k, v)
+	}
 }
