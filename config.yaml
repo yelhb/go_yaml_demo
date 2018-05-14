@@ -1,0 +1,24 @@
+## 配置文件
+
+## 系统配置
+global:
+  logPath: "/var/log/test"
+  logName: "demo.log"
+
+## Kafka 模块配置
+kafkaConfig:
+  version: "0.10.2"
+  brokerList: ["192.168.1.1:6667", "192.168.1.2:6667"]
+
+## 单独的配置项
+clusterName: tc
+
+## 嵌套格式List
+logOps:
+  - logType: event
+    expression: "event_\\w+"
+    topic: event
+  - logType: message
+    expression: "message_\\w+"
+    topic: message
+
